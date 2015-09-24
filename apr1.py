@@ -65,7 +65,7 @@ def to64(data, n_out):
 def mkint(data, *indexes):
     r = 0
     for i, idx in enumerate(indexes):
-        r |= data[idx] << (8 * (len(indexes) - i - 1))
+        r |= data[idx] << 8 * (len(indexes) - i - 1)
 
     return r
 
