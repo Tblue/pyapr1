@@ -151,7 +151,7 @@ else:
 
 if parsed_args.salt is None:
     salt = to64(
-            mkint(os.urandom(8), *range(8)),
+            mkint(os.urandom(6), *range(6)),
             8
         )
 else:
