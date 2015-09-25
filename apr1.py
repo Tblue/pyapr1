@@ -30,6 +30,41 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+# The to64() and hash_apr1() functions are based on code from the Apache Portable
+# Runtime Utility Library (namely, on the two functions to64() and
+# apr_md5_encode() from the file crypto/apr_md5.c). The licenses for that original
+# material are included below:
+#
+# ============================================================================
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+#
+#
+# The apr_md5_encode() routine uses much code obtained from the FreeBSD 3.0
+# MD5 crypt() function, which is licenced as follows:
+# ----------------------------------------------------------------------------
+# "THE BEER-WARE LICENSE" (Revision 42):
+# <phk@login.dknet.dk> wrote this file.  As long as you retain this notice you
+# can do whatever you want with this stuff. If we meet some day, and you think
+# this stuff is worth it, you can buy me a beer in return.   Poul-Henning Kamp
+# ----------------------------------------------------------------------------
+#
+# ============================================================================
+
 import os
 import sys
 
