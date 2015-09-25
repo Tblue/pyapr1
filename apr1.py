@@ -30,10 +30,13 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+import os
 import sys
 
 from argparse import ArgumentParser
+from getpass import getpass
 from hashlib import md5
+from time import sleep
 
 
 def create_argparser():
@@ -42,12 +45,15 @@ def create_argparser():
         )
 
     argparser.add_argument(
-            "salt",
-            help="Salt to use."
+            "-p",
+            "--password",
+            help="Specify password to use. If not given, interactive input "
+                 "is enabled."
         )
     argparser.add_argument(
-            "password",
-            help="Password to hash."
+            "-s",
+            "--salt",
+            help="ASCII salt to use. If not given, a salt is generated."
         )
 
     return argparser
@@ -70,7 +76,7 @@ def mkint(data, *indexes):
     return r
 
 def hash_apr1(salt, password):
-    sb = bytes(salt, "iso-8859-1")
+    sb = bytes(salt, "ascii")
     pb = bytes(password, "iso-8859-1")
     ph = md5()
 
@@ -119,12 +125,36 @@ def hash_apr1(salt, password):
 
         final = maelstrom.digest()
 
-    return to64(mkint(final, 0, 6, 12), 4) + \
-           to64(mkint(final, 1, 7, 13), 4) + \
-           to64(mkint(final, 2, 8, 14), 4) + \
-           to64(mkint(final, 3, 9, 15), 4) + \
-           to64(mkint(final, 4, 10, 5), 4) + \
-           to64(mkint(final, 11), 2)
+    pw_ascii = to64(mkint(final, 0, 6, 12), 4) + \
+               to64(mkint(final, 1, 7, 13), 4) + \
+               to64(mkint(final, 2, 8, 14), 4) + \
+               to64(mkint(final, 3, 9, 15), 4) + \
+               to64(mkint(final, 4, 10, 5), 4) + \
+               to64(mkint(final, 11), 2)
+
+    return "$apr1$%s$%s" % (salt, pw_ascii)
 
 
 parsed_args = create_argparser().parse_args()
+
+if parsed_args.password is None:
+    while True:
+        password = getpass("Enter new password: ")
+        if getpass("Repeat new password: ") != password:
+            print("Passwords do not match, please try again.", file=sys.stderr)
+            sleep(1)
+            continue
+
+        break
+else:
+    password = parsed_args.password
+
+if parsed_args.salt is None:
+    salt = to64(
+            mkint(os.urandom(8), *range(8)),
+            8
+        )
+else:
+    salt = parsed_args.salt
+
+print(hash_apr1(salt, password))
