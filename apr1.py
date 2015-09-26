@@ -82,13 +82,13 @@ def create_argparser():
     argparser.add_argument(
             "-p",
             "--password",
-            help="Specify password to use. If not given, interactive input "
-                 "is enabled."
+            help="Specify password to use. If not given, you will be prompted "
+            "for the password."
         )
     argparser.add_argument(
             "-s",
             "--salt",
-            help="ASCII salt to use. If not given, a salt is generated."
+            help="ASCII salt to use. If not given, a 48-bit salt is generated."
         )
 
     return argparser
