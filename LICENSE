@@ -28,7 +28,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-THIRD-PARTY CODE / WORK DERIVED FROM THIRD-PARTY CODE
+THIRD-PARTY CODE / WORK DERIVED FROM THIRD-PARTY CODE:
 
 The to64() and hash_apr1() functions in apr1.py are based on code from the
 Apache Portable Runtime Utility Library (namely, on the two functions to64()
